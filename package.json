@@ -22,5 +22,9 @@
   "devDependencies": {
     "@skpm/builder": "^0.5.2"
   },
+  "repository" : {
+    "type": "git",
+    "url": "git+https://github.com/Nkzq/advanced-responsive-images-default"
+  },
   "author": "Romain Lefort <rlefort@beapi.fr>"
 }
