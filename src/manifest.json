@@ -1,0 +1,18 @@
+{
+  "compatibleVersion": 3,
+  "bundleVersion": 1,
+  "icon": "icon.png",
+  "commands": [
+    {
+      "name": "Start",
+      "identifier": "start-identifier",
+      "script": "./start.js"
+    }
+  ],
+  "menu": {
+    "title": "advanced-responsive-image-default",
+    "items": [
+      "start-identifier"
+    ]
+  }
+}
