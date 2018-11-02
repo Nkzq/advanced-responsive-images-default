@@ -32,30 +32,42 @@ npm run start
 
 ## Images sizes
 
-You need to specifiy some images sizes in `src/sizes.json` like below :
+For the first prompt, you have to give the path of your image-locations.json file. It should look like this
 ````json
 [
   {
-    "img-300-200": {
-      "width": "300",
-      "height": "200",
-      "crop": true
-    },
-    "img-600-400": {
-      "width": "600",
-      "height": "400",
-      "crop": true
-    },
-    "img-100-100": {
-      "width": "100",
-      "height": "100",
-      "crop": true
-    },
-    "img-200-200": {
-      "width": "200",
-      "height": "200",
-      "crop": true
-    }
+    "header-logo": [
+      {
+        "srcsets": [
+          {
+            "srcset": "",
+            "size": "img-65-15"
+          },
+          {
+            "srcset": "2x",
+            "size": "img-130-32"
+          }
+        ],
+        "default_img": "default-65-15.jpg",
+        "img_base": "img-65-15"
+      }
+    ],
+    "footer-logo": [
+      {
+        "srcsets": [
+          {
+            "srcset": "",
+            "size": "img-115-20"
+          },
+          {
+            "srcset": "2x",
+            "size": "img-230-42"
+          }
+        ],
+        "default_img": "default-115-20.jpg",
+        "img_base": "img-115-20"
+      }
+    ]
   }
 ]
 ````
