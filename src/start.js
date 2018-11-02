@@ -1,14 +1,38 @@
 import { artboardName, groupName } from './config'
 import sketch from 'sketch'
 import UI from 'sketch/ui'
-import sizes from './sizes.json'
+const fs = require('@skpm/fs')
+const sizes = []
+
+/**
+ * Extract array of sizes from json file
+ * @param {String} path
+ */
+const getSizes = path => {
+  // Get content from file
+  const contents = fs.readFileSync(path)
+  // Define to JSON type
+  const jsonContent = JSON.parse(contents)
+  for(const val in jsonContent[0]) {
+    const tmp = sizes
+    const regex = /\d+/g
+    const found = jsonContent[0][val][0].default_img.match(regex)
+    const size = {width: found[0], height: found[1]}
+    const isExist = tmp.filter(e => e.width === size.width && e.height === size.height).length
+    if (!isExist) {
+      sizes.push(size)
+    }
+  }
+}
+
+// /Users/beapi/Documents/projets/beapi-frontend-framework/src/conf-img/image-locations.json
 
 /**
  * Clear selection of all Layers
  * @param {Object} document
  */
 const cleanAllLayers = document => {
-  var selection = document.selectedLayers
+  const selection = document.selectedLayers
   selection.clear()
 }
 
@@ -18,8 +42,8 @@ const cleanAllLayers = document => {
  * @param {String} alignment
  */
 const alignLayers = (context, alignment) => {
-  var doc = context.document
-  var action = doc.actionsController().actionForID(alignment);
+  const doc = context.document
+  const action = doc.actionsController().actionForID(alignment);
 
   if(action.validate()) {
       action.doPerformAction(null);
@@ -96,7 +120,7 @@ const exportImage = (document, size, output) => {
   selection.forEach(layer => {
     layer.name = `${layer.name}-${size.width}-${size.height}`
     sketch.export(layer, {
-      formats: 'png',
+      formats: 'jpg',
       scales: '1',
       overwriting: true,
       output
@@ -106,20 +130,23 @@ const exportImage = (document, size, output) => {
 }
 
 export default function(context) {
-  if (!sizes.length) {
-    UI.message('You need to specifiy some images sizes in the sizes.json file.')
+  const sizesPath = UI.getStringFromUser('Path of your images location json', '')
+  if (!sizesPath || !fs.existsSync(sizesPath)) {
+    UI.message('No file found')
     return false
   }
-  const output = UI.getStringFromUser('Folder images path', '~/')
-  if (!output) {
+  const output = UI.getStringFromUser('Folder images path', '')
+  if (!output || !fs.existsSync(output)) {
+    UI.message('No output folder specified')
     return false
   }
+  getSizes(sizesPath)
   const document = sketch.fromNative(context.document)
   cleanAllLayers(document)
-  Object.keys(sizes[0]).forEach(key => {
-    resizeGroup(document, sizes[0][key])
-    resizeArtboard(document, sizes[0][key])
+  Object.keys(sizes).forEach(key => {
+    resizeGroup(document, sizes[key])
+    resizeArtboard(document, sizes[key])
     alignGroupCenter(context, document)
-    exportImage(document, sizes[0][key], output)
+    exportImage(document, sizes[key], output)
   })
 }

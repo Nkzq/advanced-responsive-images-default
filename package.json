@@ -26,5 +26,8 @@
     "type": "git",
     "url": "git+https://github.com/Nkzq/advanced-responsive-images-default"
   },
-  "author": "Romain Lefort <rlefort@beapi.fr>"
+  "author": "Romain Lefort <rlefort@beapi.fr>",
+  "dependencies": {
+    "@skpm/fs": "^0.2.2"
+  }
 }
