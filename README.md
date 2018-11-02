@@ -79,3 +79,7 @@ Your Sketch should look like this :
 - a Group `default`
 
 ![Sketch Screenshot](/sketch-screenshot.png?raw=true)
+
+## Knows Issue
+
+Sometimes, the logo will not be correctly vertically align. This is due to a lack of Sketch API documentation about Actions.
